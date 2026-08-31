@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { isSupabaseConfigured } from "@/lib/albums";
+import { AdminSidebar } from "@/components/admin/admin-sidebar";
 import { logout } from "../actions";
 
 export default function ProtectedAdminLayout({
@@ -25,32 +26,42 @@ export default function ProtectedAdminLayout({
   }
 
   return (
-    <div className="flex-1 flex flex-col">
-      <header className="flex items-center justify-between px-6 py-4 border-b border-border">
-        <Link href="/admin/discos" className="font-display text-lg">
-          Panel · Pablo Cebrián
-        </Link>
-        <div className="flex items-center gap-6">
-          <Link
-            href="/"
-            target="_blank"
-            className="text-xs uppercase tracking-wide text-muted hover:text-accent transition-colors"
-          >
-            Ver web
+    <div className="flex-1 flex">
+      <AdminSidebar logoutAction={logout} />
+
+      <div className="flex-1 flex flex-col min-w-0">
+        <header className="flex md:hidden items-center justify-between px-4 py-3 border-b border-border">
+          <Link href="/admin/discos" className="font-display text-base">
+            Panel · Pablo Cebrián
           </Link>
-          <form action={logout}>
-            <button
-              type="submit"
-              className="text-xs uppercase tracking-wide text-muted hover:text-accent transition-colors"
+          <div className="flex items-center gap-4">
+            <Link
+              href="/admin/discos"
+              className="text-[11px] uppercase tracking-wide text-muted hover:text-accent transition-colors"
             >
-              Salir
-            </button>
-          </form>
-        </div>
-      </header>
-      <main className="flex-1 px-6 py-8 max-w-5xl w-full mx-auto">
-        {children}
-      </main>
+              Discos
+            </Link>
+            <Link
+              href="/admin/bio"
+              className="text-[11px] uppercase tracking-wide text-muted hover:text-accent transition-colors"
+            >
+              Bio
+            </Link>
+            <form action={logout}>
+              <button
+                type="submit"
+                className="text-[11px] uppercase tracking-wide text-muted hover:text-accent transition-colors"
+              >
+                Salir
+              </button>
+            </form>
+          </div>
+        </header>
+
+        <main className="flex-1 px-6 py-8 w-full max-w-5xl mx-auto">
+          {children}
+        </main>
+      </div>
     </div>
   );
 }

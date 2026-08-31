@@ -70,3 +70,52 @@ body {
   border-color: var(--accent);
   box-shadow: 0 0 0 3px rgba(184, 134, 11, 0.18);
 }
+
+.prose-bio p {
+  margin-bottom: 1.25em;
+  line-height: 1.75;
+  color: color-mix(in srgb, var(--foreground) 85%, transparent);
+}
+
+.prose-bio p:last-child {
+  margin-bottom: 0;
+}
+
+.prose-bio h2 {
+  font-family: var(--font-display);
+  font-size: 1.4rem;
+  font-weight: 500;
+  color: var(--foreground);
+  margin: 1.5em 0 0.6em;
+}
+
+.prose-bio h2:first-child {
+  margin-top: 0;
+}
+
+.prose-bio strong {
+  color: var(--accent);
+  font-weight: 600;
+}
+
+.prose-bio a {
+  color: var(--accent);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.prose-bio a:hover {
+  color: var(--accent-soft);
+}
+
+.prose-bio ul {
+  list-style: disc;
+  padding-left: 1.4em;
+  margin-bottom: 1.25em;
+  text-align: left;
+  display: inline-block;
+}
+
+.prose-bio li {
+  margin-bottom: 0.4em;
+}

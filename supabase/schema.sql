@@ -98,3 +98,45 @@ create policy "Admin borra portadas"
   on storage.objects for delete
   to authenticated
   using (bucket_id = 'album-covers');
+
+-- ============================================================
+-- Migración: contenido editable del sitio (Bio de "Sobre mí")
+-- Ejecutar también en el SQL editor si ya tenías el esquema de
+-- discos creado antes de que existiera esta sección.
+-- ============================================================
+
+create table if not exists public.site_content (
+  key text primary key,
+  content text not null default '',
+  updated_at timestamptz not null default now()
+);
+
+insert into public.site_content (key, content)
+values ('bio', '')
+on conflict (key) do nothing;
+
+drop trigger if exists site_content_set_updated_at on public.site_content;
+create trigger site_content_set_updated_at
+  before update on public.site_content
+  for each row execute function public.set_updated_at();
+
+alter table public.site_content enable row level security;
+
+drop policy if exists "Contenido publico visible" on public.site_content;
+create policy "Contenido publico visible"
+  on public.site_content for select
+  to anon, authenticated
+  using (true);
+
+drop policy if exists "Admin actualiza contenido" on public.site_content;
+create policy "Admin actualiza contenido"
+  on public.site_content for update
+  to authenticated
+  using (true)
+  with check (true);
+
+drop policy if exists "Admin inserta contenido" on public.site_content;
+create policy "Admin inserta contenido"
+  on public.site_content for insert
+  to authenticated
+  with check (true);
