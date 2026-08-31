@@ -1,4 +1,7 @@
+"use client";
+
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 
 const links = [
   { href: "/discografia", label: "Discografía" },
@@ -7,10 +10,13 @@ const links = [
 ];
 
 export function Nav() {
+  const pathname = usePathname();
+  const prefix = pathname?.startsWith("/versionblanco") ? "/versionblanco" : "";
+
   return (
     <header className="flex flex-col items-center gap-6 pt-16 pb-10 px-6 text-center">
-      <Link href="/">
-        <h1 className="font-display font-medium tracking-wide text-white text-[32px] min-[380px]:text-[36px] sm:text-[38px] md:text-[42px] lg:text-[46px] leading-none whitespace-nowrap">
+      <Link href={prefix || "/"}>
+        <h1 className="font-display font-medium tracking-wide text-foreground text-[32px] min-[380px]:text-[36px] sm:text-[38px] md:text-[42px] lg:text-[46px] leading-none whitespace-nowrap">
           PABLO CEBRIÁN
         </h1>
       </Link>
@@ -20,8 +26,8 @@ export function Nav() {
           {links.map((link) => (
             <li key={link.href}>
               <Link
-                href={link.href}
-                className="whitespace-nowrap text-[11px] min-[480px]:text-xs sm:text-sm md:text-base tracking-[0.18em] min-[480px]:tracking-[0.22em] sm:tracking-[0.28em] uppercase text-white/70 hover:text-accent transition-colors"
+                href={`${prefix}${link.href}`}
+                className="whitespace-nowrap text-[11px] min-[480px]:text-xs sm:text-sm md:text-base tracking-[0.18em] min-[480px]:tracking-[0.22em] sm:tracking-[0.28em] uppercase text-foreground/70 hover:text-accent transition-colors"
               >
                 {link.label}
               </Link>

@@ -1,12 +1,12 @@
 import Link from "next/link";
 
 const links = [
-  { href: "/discografia", label: "Discografía" },
-  { href: "/sobre-mi", label: "Sobre mí" },
-  { href: "/contacto", label: "Contacto" },
+  { href: "/versionblanco/discografia", label: "Discografía" },
+  { href: "/versionblanco/sobre-mi", label: "Sobre mí" },
+  { href: "/versionblanco/contacto", label: "Contacto" },
 ];
 
-export default function Home() {
+export default function VersionBlancoHome() {
   return (
     <main className="flex-1 flex flex-col items-center justify-center gap-5 sm:gap-7 min-h-dvh text-center px-6 overflow-x-hidden">
       <h1 className="font-display font-medium tracking-wide text-foreground text-[32px] min-[380px]:text-[39px] min-[480px]:text-[51px] sm:text-[64px] md:text-[74px] lg:text-[84px] leading-none whitespace-nowrap">

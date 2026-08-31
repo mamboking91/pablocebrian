@@ -68,6 +68,20 @@ body {
   color: #5a5a5a;
 }
 
+.theme-light {
+  --background: #ffffff;
+  --background-elevated: #f4f2ee;
+  --foreground: #1a1a1a;
+  --muted: #6b6b6b;
+  --accent: #b8860b;
+  --accent-soft: #96700a;
+  --border: #e2ddd3;
+}
+
+.theme-light .input::placeholder {
+  color: #9a9a9a;
+}
+
 .input:focus {
   outline: none;
   border-color: var(--accent);

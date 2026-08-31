@@ -1,8 +1,14 @@
+"use client";
+
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { Album } from "@/lib/types";
 import { AlbumCover } from "./album-cover";
 
 export function AlbumGrid({ albums }: { albums: Album[] }) {
+  const pathname = usePathname();
+  const prefix = pathname?.startsWith("/versionblanco") ? "/versionblanco" : "";
+
   if (albums.length === 0) {
     return (
       <p className="text-center text-muted py-16">
@@ -16,7 +22,7 @@ export function AlbumGrid({ albums }: { albums: Album[] }) {
       {albums.map((album, index) => (
         <Link
           key={album.id}
-          href={`/discografia/${album.slug}`}
+          href={`${prefix}/discografia/${album.slug}`}
           className="group fade-in-up"
           style={{ animationDelay: `${Math.min(index * 60, 600)}ms` }}
         >

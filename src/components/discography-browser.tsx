@@ -31,8 +31,8 @@ export function DiscographyBrowser({ albums }: { albums: Album[] }) {
 
   return (
     <div>
-      <div className="flex flex-wrap items-center justify-between gap-4 mb-10">
-        <div className="relative w-full sm:w-56">
+      <div className="flex flex-nowrap items-center justify-between gap-2 sm:gap-4 mb-10">
+        <div className="relative flex-1 min-w-0 sm:max-w-56">
           <svg
             width="14"
             height="14"
@@ -56,14 +56,14 @@ export function DiscographyBrowser({ albums }: { albums: Album[] }) {
           />
         </div>
 
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-1.5 sm:gap-2 shrink-0">
           <button
             type="button"
             onClick={() => setFilter("todos")}
-            className={`text-[11px] tracking-[0.18em] uppercase px-3.5 py-1.5 rounded-full border transition-colors ${
+            className={`whitespace-nowrap text-[10px] sm:text-[11px] tracking-[0.14em] sm:tracking-[0.18em] uppercase px-2.5 sm:px-3.5 py-1.5 rounded-full border transition-colors ${
               filter === "todos"
                 ? "bg-accent border-accent text-background"
-                : "border-white/25 text-white/70 hover:border-accent hover:text-accent"
+                : "border-foreground/25 text-foreground/70 hover:border-accent hover:text-accent"
             }`}
           >
             Todos
@@ -71,10 +71,10 @@ export function DiscographyBrowser({ albums }: { albums: Album[] }) {
           <button
             type="button"
             onClick={() => setFilter("seleccion")}
-            className={`text-[11px] tracking-[0.18em] uppercase px-3.5 py-1.5 rounded-full border transition-colors ${
+            className={`whitespace-nowrap text-[10px] sm:text-[11px] tracking-[0.14em] sm:tracking-[0.18em] uppercase px-2.5 sm:px-3.5 py-1.5 rounded-full border transition-colors ${
               filter === "seleccion"
                 ? "bg-accent border-accent text-background"
-                : "border-white/25 text-white/70 hover:border-accent hover:text-accent"
+                : "border-foreground/25 text-foreground/70 hover:border-accent hover:text-accent"
             }`}
           >
             Selección
