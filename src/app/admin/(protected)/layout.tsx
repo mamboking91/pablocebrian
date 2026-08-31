@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { isSupabaseConfigured } from "@/lib/albums";
 import { AdminSidebar } from "@/components/admin/admin-sidebar";
+import { AdminMobileNav } from "@/components/admin/admin-mobile-nav";
 import { logout } from "../actions";
 
 export default function ProtectedAdminLayout({
@@ -30,38 +31,18 @@ export default function ProtectedAdminLayout({
       <AdminSidebar logoutAction={logout} />
 
       <div className="flex-1 flex flex-col min-w-0">
-        <header className="flex md:hidden items-center justify-between px-4 py-3 border-b border-border">
+        <header className="flex md:hidden items-center px-4 py-3 border-b border-border">
           <Link href="/admin/discos" className="font-display text-base">
             Panel · Pablo Cebrián
           </Link>
-          <div className="flex items-center gap-4">
-            <Link
-              href="/admin/discos"
-              className="text-[11px] uppercase tracking-wide text-muted hover:text-accent transition-colors"
-            >
-              Discos
-            </Link>
-            <Link
-              href="/admin/bio"
-              className="text-[11px] uppercase tracking-wide text-muted hover:text-accent transition-colors"
-            >
-              Bio
-            </Link>
-            <form action={logout}>
-              <button
-                type="submit"
-                className="text-[11px] uppercase tracking-wide text-muted hover:text-accent transition-colors"
-              >
-                Salir
-              </button>
-            </form>
-          </div>
         </header>
 
-        <main className="flex-1 px-6 py-8 w-full max-w-5xl mx-auto">
+        <main className="flex-1 px-6 py-8 w-full max-w-5xl mx-auto pb-24 md:pb-8">
           {children}
         </main>
       </div>
+
+      <AdminMobileNav logoutAction={logout} />
     </div>
   );
 }

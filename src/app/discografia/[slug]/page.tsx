@@ -51,6 +51,33 @@ export default async function AlbumPage({
               )}
             </dl>
 
+            {(spotifyEmbed || appleMusicEmbed) && (
+              <div className="space-y-6 mb-8">
+                {spotifyEmbed && (
+                  <iframe
+                    title={`Spotify — ${album.title}`}
+                    src={spotifyEmbed.src}
+                    width="100%"
+                    height={spotifyEmbed.height}
+                    style={{ borderRadius: 12 }}
+                    allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+                    loading="lazy"
+                  />
+                )}
+                {appleMusicEmbed && (
+                  <iframe
+                    title={`Apple Music — ${album.title}`}
+                    src={appleMusicEmbed.src}
+                    width="100%"
+                    height={appleMusicEmbed.height}
+                    style={{ borderRadius: 12, overflow: "hidden" }}
+                    allow="autoplay *; encrypted-media *; fullscreen *; clipboard-write"
+                    loading="lazy"
+                  />
+                )}
+              </div>
+            )}
+
             {album.youtube_url && (
               <a
                 href={album.youtube_url}
@@ -63,33 +90,6 @@ export default async function AlbumPage({
             )}
           </div>
         </div>
-
-        {(spotifyEmbed || appleMusicEmbed) && (
-          <div className="mt-12 space-y-6 max-w-lg">
-            {spotifyEmbed && (
-              <iframe
-                title={`Spotify — ${album.title}`}
-                src={spotifyEmbed.src}
-                width="100%"
-                height={spotifyEmbed.height}
-                style={{ borderRadius: 12 }}
-                allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
-                loading="lazy"
-              />
-            )}
-            {appleMusicEmbed && (
-              <iframe
-                title={`Apple Music — ${album.title}`}
-                src={appleMusicEmbed.src}
-                width="100%"
-                height={appleMusicEmbed.height}
-                style={{ borderRadius: 12, overflow: "hidden" }}
-                allow="autoplay *; encrypted-media *; fullscreen *; clipboard-write"
-                loading="lazy"
-              />
-            )}
-          </div>
-        )}
       </main>
       <Footer />
     </>

@@ -64,72 +64,85 @@ export function AdminAlbumsTable({
             : "Ningún disco coincide con la búsqueda."}
         </p>
       ) : (
-        <table className="w-full text-sm">
-          <thead>
-            <tr className="text-left text-xs uppercase tracking-wide text-muted border-b border-border">
-              <th className="py-2 pr-4" />
-              <th className="py-2 pr-4">Título</th>
-              <th className="py-2 pr-4">Artista(s)</th>
-              <th className="py-2 pr-4">Destacado</th>
-              <th className="py-2 pr-4">Publicado</th>
-              <th className="py-2 pr-4" />
-            </tr>
-          </thead>
-          <tbody>
-            {visible.map((album) => (
-              <tr key={album.id} className="border-b border-border/60">
-                <td className="py-2 pr-4">
-                  <div className="relative w-11 h-11 bg-background-elevated border border-border overflow-hidden shrink-0">
-                    {album.cover_url ? (
-                      <Image
-                        src={album.cover_url}
-                        alt=""
-                        fill
-                        sizes="44px"
-                        className="object-cover"
-                      />
-                    ) : null}
-                  </div>
-                </td>
-                <td className="py-2 pr-4">{album.title}</td>
-                <td className="py-2 pr-4 text-muted">
-                  {album.artist_names.join(", ")}
-                </td>
-                <td className="py-2 pr-4">{album.featured ? "Sí" : "—"}</td>
-                <td className="py-2 pr-4">{album.published ? "Sí" : "—"}</td>
-                <td className="py-2 pr-4">
-                  <div className="flex items-center justify-end gap-4">
-                    <Link
-                      href={`/admin/discos/${album.id}`}
-                      className="text-accent hover:text-accent-soft transition-colors"
-                    >
-                      Editar
-                    </Link>
-                    <form
-                      action={async () => {
-                        if (
-                          !window.confirm(
-                            `¿Eliminar "${album.title}"? Esta acción no se puede deshacer.`,
-                          )
-                        ) {
-                          return;
-                        }
-                        await deleteAlbum(album.id);
-                      }}
-                    >
-                      <button
-                        type="submit"
-                        className="text-red-400 hover:text-red-300 transition-colors"
-                      >
-                        Eliminar
-                      </button>
-                    </form>
-                  </div>
-                </td>
+        <div className="overflow-x-auto -mx-6 px-6 sm:mx-0 sm:px-0">
+          <table className="w-full text-sm min-w-[560px]">
+            <thead>
+              <tr className="text-left text-xs uppercase tracking-wide text-muted border-b border-border">
+                <th className="py-2 pr-4" />
+                <th className="py-2 pr-4">Título</th>
+                <th className="py-2 pr-4 hidden sm:table-cell">
+                  Artista(s)
+                </th>
+                <th className="py-2 pr-4 hidden sm:table-cell">Destacado</th>
+                <th className="py-2 pr-4 hidden sm:table-cell">Publicado</th>
+                <th className="py-2 pr-4" />
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              {visible.map((album) => (
+                <tr key={album.id} className="border-b border-border/60">
+                  <td className="py-2 pr-4">
+                    <div className="relative w-11 h-11 bg-background-elevated border border-border overflow-hidden shrink-0">
+                      {album.cover_url ? (
+                        <Image
+                          src={album.cover_url}
+                          alt=""
+                          fill
+                          sizes="44px"
+                          className="object-cover"
+                        />
+                      ) : null}
+                    </div>
+                  </td>
+                  <td className="py-2 pr-4">
+                    <div>{album.title}</div>
+                    <div className="text-muted text-xs sm:hidden">
+                      {album.artist_names.join(", ")}
+                    </div>
+                  </td>
+                  <td className="py-2 pr-4 text-muted hidden sm:table-cell">
+                    {album.artist_names.join(", ")}
+                  </td>
+                  <td className="py-2 pr-4 hidden sm:table-cell">
+                    {album.featured ? "Sí" : "—"}
+                  </td>
+                  <td className="py-2 pr-4 hidden sm:table-cell">
+                    {album.published ? "Sí" : "—"}
+                  </td>
+                  <td className="py-2 pr-4">
+                    <div className="flex items-center justify-end gap-4">
+                      <Link
+                        href={`/admin/discos/${album.id}`}
+                        className="text-accent hover:text-accent-soft transition-colors"
+                      >
+                        Editar
+                      </Link>
+                      <form
+                        action={async () => {
+                          if (
+                            !window.confirm(
+                              `¿Eliminar "${album.title}"? Esta acción no se puede deshacer.`,
+                            )
+                          ) {
+                            return;
+                          }
+                          await deleteAlbum(album.id);
+                        }}
+                      >
+                        <button
+                          type="submit"
+                          className="text-red-400 hover:text-red-300 transition-colors"
+                        >
+                          Eliminar
+                        </button>
+                      </form>
+                    </div>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
       )}
     </div>
   );

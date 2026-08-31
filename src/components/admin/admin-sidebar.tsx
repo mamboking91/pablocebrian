@@ -36,7 +36,7 @@ export function AdminSidebar({
   const pathname = usePathname();
 
   return (
-    <aside className="hidden md:flex flex-col w-60 shrink-0 border-r border-border min-h-screen">
+    <aside className="hidden md:flex flex-col w-60 shrink-0 border-r border-border h-screen sticky top-0 overflow-y-auto">
       <Link
         href="/admin/discos"
         className="block px-6 py-6 border-b border-border"
