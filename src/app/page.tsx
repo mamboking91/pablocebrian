@@ -9,7 +9,7 @@ const links = [
 export default function Home() {
   return (
     <main className="flex-1 flex flex-col items-center justify-center gap-5 sm:gap-7 min-h-dvh text-center px-6 overflow-x-hidden">
-      <h1 className="font-display font-medium tracking-wide text-white text-[30px] min-[380px]:text-[38px] min-[480px]:text-[47px] sm:text-[64px] lg:text-[84px] leading-none whitespace-nowrap">
+      <h1 className="font-display font-medium tracking-wide text-white text-[32px] min-[380px]:text-[39px] min-[480px]:text-[51px] sm:text-[64px] md:text-[74px] lg:text-[84px] leading-none whitespace-nowrap">
         PABLO CEBRIÁN
       </h1>
       <div className="h-px w-40 sm:w-80 bg-accent" />

@@ -32,17 +32,17 @@ export function DiscographyBrowser({ albums }: { albums: Album[] }) {
   return (
     <div>
       <div className="flex flex-wrap items-center justify-between gap-4 mb-10">
-        <div className="relative w-full sm:w-64">
+        <div className="relative w-full sm:w-56">
           <svg
-            width="16"
-            height="16"
+            width="14"
+            height="14"
             viewBox="0 0 24 24"
             fill="none"
             stroke="currentColor"
             strokeWidth="2"
             strokeLinecap="round"
             strokeLinejoin="round"
-            className="absolute left-3.5 top-1/2 -translate-y-1/2 text-muted"
+            className="absolute left-3 top-1/2 -translate-y-1/2 text-muted"
           >
             <circle cx="11" cy="11" r="7" />
             <line x1="21" y1="21" x2="16.65" y2="16.65" />
@@ -52,7 +52,7 @@ export function DiscographyBrowser({ albums }: { albums: Album[] }) {
             value={query}
             onChange={(e) => setQuery(e.target.value)}
             placeholder="Buscar por título o artista…"
-            className="w-full bg-background-elevated border border-border rounded-full pl-10 pr-4 py-2.5 text-sm text-foreground placeholder:text-muted focus:outline-none focus:border-accent"
+            className="w-full bg-background-elevated border border-border rounded-full pl-8 pr-3 py-1.5 text-xs text-foreground placeholder:text-muted focus:outline-none focus:border-accent"
           />
         </div>
 
@@ -60,7 +60,7 @@ export function DiscographyBrowser({ albums }: { albums: Album[] }) {
           <button
             type="button"
             onClick={() => setFilter("todos")}
-            className={`text-xs tracking-[0.22em] uppercase px-5 py-2.5 rounded-full border transition-colors ${
+            className={`text-[11px] tracking-[0.18em] uppercase px-3.5 py-1.5 rounded-full border transition-colors ${
               filter === "todos"
                 ? "bg-accent border-accent text-background"
                 : "border-white/25 text-white/70 hover:border-accent hover:text-accent"
@@ -71,7 +71,7 @@ export function DiscographyBrowser({ albums }: { albums: Album[] }) {
           <button
             type="button"
             onClick={() => setFilter("seleccion")}
-            className={`text-xs tracking-[0.22em] uppercase px-5 py-2.5 rounded-full border transition-colors ${
+            className={`text-[11px] tracking-[0.18em] uppercase px-3.5 py-1.5 rounded-full border transition-colors ${
               filter === "seleccion"
                 ? "bg-accent border-accent text-background"
                 : "border-white/25 text-white/70 hover:border-accent hover:text-accent"

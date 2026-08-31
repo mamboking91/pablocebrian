@@ -10,7 +10,7 @@ export function Nav() {
   return (
     <header className="flex flex-col items-center gap-6 pt-16 pb-10 px-6 text-center">
       <Link href="/">
-        <h1 className="font-display font-medium tracking-wide text-white text-[28px] sm:text-[38px] lg:text-[46px] leading-none whitespace-nowrap">
+        <h1 className="font-display font-medium tracking-wide text-white text-[32px] min-[380px]:text-[36px] sm:text-[38px] md:text-[42px] lg:text-[46px] leading-none whitespace-nowrap">
           PABLO CEBRIÁN
         </h1>
       </Link>

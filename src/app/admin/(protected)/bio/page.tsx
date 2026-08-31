@@ -1,5 +1,6 @@
 import { BioEditor } from "@/components/admin/bio-editor";
 import { getSiteContent } from "@/lib/site-content";
+import { DEFAULT_BIO_HTML } from "@/lib/default-bio";
 import { saveBio } from "./actions";
 
 export const metadata = {
@@ -9,7 +10,7 @@ export const metadata = {
 export const dynamic = "force-dynamic";
 
 export default async function AdminBioPage() {
-  const content = (await getSiteContent("bio")) ?? "";
+  const content = (await getSiteContent("bio")) ?? DEFAULT_BIO_HTML;
 
   return (
     <div>
