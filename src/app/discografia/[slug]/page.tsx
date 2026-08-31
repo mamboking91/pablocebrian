@@ -3,12 +3,7 @@ import { Nav } from "@/components/nav";
 import { Footer } from "@/components/footer";
 import { AlbumCover } from "@/components/album-cover";
 import { getAlbumBySlug } from "@/lib/albums";
-
-const linkLabels: Record<string, string> = {
-  spotify_url: "Spotify",
-  apple_music_url: "Apple Music",
-  youtube_url: "YouTube",
-};
+import { getAppleMusicEmbed, getSpotifyEmbed } from "@/lib/embeds";
 
 export default async function AlbumPage({
   params,
@@ -18,9 +13,8 @@ export default async function AlbumPage({
 
   if (!album) notFound();
 
-  const links = (
-    ["spotify_url", "apple_music_url", "youtube_url"] as const
-  ).filter((key) => album[key]);
+  const spotifyEmbed = getSpotifyEmbed(album.spotify_url);
+  const appleMusicEmbed = getAppleMusicEmbed(album.apple_music_url);
 
   return (
     <>
@@ -57,24 +51,45 @@ export default async function AlbumPage({
               )}
             </dl>
 
-            {links.length > 0 && (
-              <ul className="flex flex-wrap gap-4">
-                {links.map((key) => (
-                  <li key={key}>
-                    <a
-                      href={album[key]!}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="text-xs tracking-[0.2em] uppercase text-accent hover:text-accent-soft transition-colors border border-accent-soft/50 px-4 py-2"
-                    >
-                      {linkLabels[key]}
-                    </a>
-                  </li>
-                ))}
-              </ul>
+            {album.youtube_url && (
+              <a
+                href={album.youtube_url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-block text-xs tracking-[0.2em] uppercase text-accent hover:text-accent-soft transition-colors border border-accent-soft/50 px-4 py-2"
+              >
+                YouTube
+              </a>
             )}
           </div>
         </div>
+
+        {(spotifyEmbed || appleMusicEmbed) && (
+          <div className="mt-12 space-y-6 max-w-lg">
+            {spotifyEmbed && (
+              <iframe
+                title={`Spotify — ${album.title}`}
+                src={spotifyEmbed.src}
+                width="100%"
+                height={spotifyEmbed.height}
+                style={{ borderRadius: 12 }}
+                allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+                loading="lazy"
+              />
+            )}
+            {appleMusicEmbed && (
+              <iframe
+                title={`Apple Music — ${album.title}`}
+                src={appleMusicEmbed.src}
+                width="100%"
+                height={appleMusicEmbed.height}
+                style={{ borderRadius: 12, overflow: "hidden" }}
+                allow="autoplay *; encrypted-media *; fullscreen *; clipboard-write"
+                loading="lazy"
+              />
+            )}
+          </div>
+        )}
       </main>
       <Footer />
     </>

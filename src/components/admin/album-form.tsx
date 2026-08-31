@@ -56,10 +56,16 @@ export function AlbumForm({
         />
       </Field>
 
-      <Field label="Enlace de Spotify">
+      <Field
+        label="Enlace de Spotify"
+        hint="Si lo rellenas, se muestra un reproductor de Spotify embebido en la ficha del disco"
+      >
         <input name="spotify_url" defaultValue={album?.spotify_url ?? ""} className="input" />
       </Field>
-      <Field label="Enlace de Apple Music">
+      <Field
+        label="Enlace de Apple Music"
+        hint="Si lo rellenas, se muestra un reproductor de Apple Music embebido en la ficha del disco"
+      >
         <input
           name="apple_music_url"
           defaultValue={album?.apple_music_url ?? ""}
