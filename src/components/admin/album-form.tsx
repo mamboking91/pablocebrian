@@ -1,4 +1,5 @@
 import { Album } from "@/lib/types";
+import { CoverPicker } from "@/components/admin/cover-picker";
 
 export function AlbumForm({
   album,
@@ -48,12 +49,7 @@ export function AlbumForm({
       </div>
 
       <Field label="Portada" hint={album?.cover_url ? "Sube una imagen para reemplazar la actual" : "Imagen cuadrada recomendada"}>
-        <input
-          name="cover"
-          type="file"
-          accept="image/*"
-          className="text-sm text-muted"
-        />
+        <CoverPicker currentUrl={album?.cover_url ?? null} />
       </Field>
 
       <Field

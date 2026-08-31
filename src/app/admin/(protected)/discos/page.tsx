@@ -1,8 +1,10 @@
+import { Suspense } from "react";
 import Link from "next/link";
 import { createClient } from "@/lib/supabase/server";
 import { Album } from "@/lib/types";
 import { AdminAlbumsTable } from "@/components/admin/admin-albums-table";
-import { deleteAlbum } from "./actions";
+import { ToastListener } from "@/components/admin/toast-listener";
+import { deleteAlbum, reorderAlbums } from "./actions";
 
 export const metadata = {
   title: "Admin · Discos",
@@ -22,6 +24,10 @@ export default async function AdminDiscosPage() {
 
   return (
     <div>
+      <Suspense fallback={null}>
+        <ToastListener />
+      </Suspense>
+
       <div className="flex items-center justify-between mb-6">
         <div>
           <h1 className="font-display text-2xl">Discos</h1>
@@ -34,13 +40,17 @@ export default async function AdminDiscosPage() {
         </div>
         <Link
           href="/admin/discos/nuevo"
-          className="text-xs uppercase tracking-wide bg-accent text-background px-4 py-2 hover:bg-accent-soft transition-colors"
+          className="shrink-0 whitespace-nowrap rounded-full text-[10px] sm:text-xs uppercase tracking-wide bg-accent text-background px-3 sm:px-4 py-2 hover:bg-accent-soft transition-colors"
         >
           + Añadir disco
         </Link>
       </div>
 
-      <AdminAlbumsTable albums={albums} deleteAlbum={deleteAlbum} />
+      <AdminAlbumsTable
+        albums={albums}
+        deleteAlbum={deleteAlbum}
+        reorderAlbums={reorderAlbums}
+      />
     </div>
   );
 }

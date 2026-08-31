@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { Toaster } from "sonner";
 import { isSupabaseConfigured } from "@/lib/albums";
 import { AdminSidebar } from "@/components/admin/admin-sidebar";
 import { AdminMobileNav } from "@/components/admin/admin-mobile-nav";
@@ -43,6 +44,18 @@ export default function ProtectedAdminLayout({
       </div>
 
       <AdminMobileNav logoutAction={logout} />
+
+      <Toaster
+        position="bottom-right"
+        theme="dark"
+        toastOptions={{
+          style: {
+            background: "var(--background-elevated)",
+            border: "1px solid var(--border)",
+            color: "var(--foreground)",
+          },
+        }}
+      />
     </div>
   );
 }

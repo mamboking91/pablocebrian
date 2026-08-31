@@ -71,7 +71,7 @@ export async function createAlbum(formData: FormData) {
 
   revalidatePath("/discografia");
   revalidatePath("/");
-  redirect("/admin/discos");
+  redirect("/admin/discos?toast=created");
 }
 
 export async function updateAlbum(id: string, formData: FormData) {
@@ -89,7 +89,24 @@ export async function updateAlbum(id: string, formData: FormData) {
   revalidatePath("/discografia");
   revalidatePath(`/discografia/${values.slug}`);
   revalidatePath("/");
-  redirect("/admin/discos");
+  redirect("/admin/discos?toast=updated");
+}
+
+export async function reorderAlbums(orderedIds: string[]) {
+  const supabase = await createClient();
+
+  const results = await Promise.all(
+    orderedIds.map((id, index) =>
+      supabase.from("albums").update({ sort_order: index }).eq("id", id),
+    ),
+  );
+
+  const failed = results.find((result) => result.error);
+  if (failed?.error) throw failed.error;
+
+  revalidatePath("/admin/discos");
+  revalidatePath("/discografia");
+  revalidatePath("/");
 }
 
 export async function deleteAlbum(id: string) {
@@ -99,5 +116,5 @@ export async function deleteAlbum(id: string) {
 
   revalidatePath("/discografia");
   revalidatePath("/");
-  redirect("/admin/discos");
+  redirect("/admin/discos?toast=deleted");
 }
