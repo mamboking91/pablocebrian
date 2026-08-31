@@ -140,3 +140,13 @@ create policy "Admin inserta contenido"
   on public.site_content for insert
   to authenticated
   with check (true);
+
+-- ============================================================
+-- Migración: elegir qué reproductor(es) mostrar por disco
+-- ============================================================
+
+alter table public.albums
+  add column if not exists show_spotify boolean not null default true;
+
+alter table public.albums
+  add column if not exists show_apple_music boolean not null default true;

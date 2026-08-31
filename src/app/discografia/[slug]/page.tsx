@@ -13,8 +13,12 @@ export default async function AlbumPage({
 
   if (!album) notFound();
 
-  const spotifyEmbed = getSpotifyEmbed(album.spotify_url);
-  const appleMusicEmbed = getAppleMusicEmbed(album.apple_music_url);
+  const spotifyEmbed = album.show_spotify
+    ? getSpotifyEmbed(album.spotify_url)
+    : null;
+  const appleMusicEmbed = album.show_apple_music
+    ? getAppleMusicEmbed(album.apple_music_url)
+    : null;
 
   return (
     <>

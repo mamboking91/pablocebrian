@@ -10,6 +10,8 @@ export type Album = {
   spotify_url: string | null;
   apple_music_url: string | null;
   youtube_url: string | null;
+  show_spotify: boolean;
+  show_apple_music: boolean;
   featured: boolean;
   published: boolean;
   sort_order: number;

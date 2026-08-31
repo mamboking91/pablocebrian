@@ -32,6 +32,8 @@ function readAlbumForm(formData: FormData) {
     apple_music_url:
       String(formData.get("apple_music_url") ?? "").trim() || null,
     youtube_url: String(formData.get("youtube_url") ?? "").trim() || null,
+    show_spotify: formData.get("show_spotify") === "on",
+    show_apple_music: formData.get("show_apple_music") === "on",
     featured: formData.get("featured") === "on",
     published: formData.get("published") === "on",
     sort_order: Number(formData.get("sort_order") ?? 0),

@@ -23,6 +23,8 @@ function album(partial: {
     spotify_url: null,
     apple_music_url: null,
     youtube_url: null,
+    show_spotify: true,
+    show_apple_music: true,
     published: true,
     ...partial,
   };

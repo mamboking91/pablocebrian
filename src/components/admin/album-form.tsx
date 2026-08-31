@@ -58,19 +58,35 @@ export function AlbumForm({
 
       <Field
         label="Enlace de Spotify"
-        hint="Si lo rellenas, se muestra un reproductor de Spotify embebido en la ficha del disco"
+        hint="Si lo rellenas y activas el reproductor abajo, se muestra embebido en la ficha del disco"
       >
-        <input name="spotify_url" defaultValue={album?.spotify_url ?? ""} className="input" />
+        <input name="spotify_url" defaultValue={album?.spotify_url ?? ""} className="input mb-2" />
+        <label className="flex items-center gap-2 text-sm">
+          <input
+            type="checkbox"
+            name="show_spotify"
+            defaultChecked={album?.show_spotify ?? true}
+          />
+          Mostrar reproductor de Spotify
+        </label>
       </Field>
       <Field
         label="Enlace de Apple Music"
-        hint="Si lo rellenas, se muestra un reproductor de Apple Music embebido en la ficha del disco"
+        hint="Si lo rellenas y activas el reproductor abajo, se muestra embebido en la ficha del disco"
       >
         <input
           name="apple_music_url"
           defaultValue={album?.apple_music_url ?? ""}
-          className="input"
+          className="input mb-2"
         />
+        <label className="flex items-center gap-2 text-sm">
+          <input
+            type="checkbox"
+            name="show_apple_music"
+            defaultChecked={album?.show_apple_music ?? true}
+          />
+          Mostrar reproductor de Apple Music
+        </label>
       </Field>
       <Field label="Enlace de YouTube">
         <input name="youtube_url" defaultValue={album?.youtube_url ?? ""} className="input" />
