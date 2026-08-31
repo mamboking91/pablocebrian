@@ -92,6 +92,24 @@ export async function updateAlbum(id: string, formData: FormData) {
   redirect("/admin/discos?toast=updated");
 }
 
+export async function setAlbumFlag(
+  id: string,
+  field: "featured" | "published",
+  value: boolean,
+) {
+  const supabase = await createClient();
+  const { error } = await supabase
+    .from("albums")
+    .update({ [field]: value })
+    .eq("id", id);
+
+  if (error) throw error;
+
+  revalidatePath("/admin/discos");
+  revalidatePath("/discografia");
+  revalidatePath("/");
+}
+
 export async function reorderAlbums(orderedIds: string[]) {
   const supabase = await createClient();
 

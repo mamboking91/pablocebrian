@@ -21,6 +21,7 @@ import {
 import { CSS } from "@dnd-kit/utilities";
 import { Album } from "@/lib/types";
 import { ConfirmDeleteDialog } from "@/components/admin/confirm-delete-dialog";
+import { Switch } from "@/components/admin/switch";
 
 function PencilIcon({ className }: { className?: string }) {
   return (
@@ -87,10 +88,12 @@ function AlbumRow({
   album,
   canReorder,
   onDelete,
+  onToggle,
 }: {
   album: Album;
   canReorder: boolean;
   onDelete: (album: Album) => void;
+  onToggle: (album: Album, field: "featured" | "published", value: boolean) => void;
 }) {
   const { attributes, listeners, setNodeRef, transform, transition, isDragging } =
     useSortable({ id: album.id, disabled: !canReorder });
@@ -144,10 +147,18 @@ function AlbumRow({
         {album.artist_names.join(", ")}
       </td>
       <td className="py-2 pr-4 hidden sm:table-cell">
-        {album.featured ? "Sí" : "—"}
+        <Switch
+          checked={album.featured}
+          onChange={(value) => onToggle(album, "featured", value)}
+          aria-label={`Destacado: ${album.title}`}
+        />
       </td>
       <td className="py-2 pr-4 hidden sm:table-cell">
-        {album.published ? "Sí" : "—"}
+        <Switch
+          checked={album.published}
+          onChange={(value) => onToggle(album, "published", value)}
+          aria-label={`Publicado: ${album.title}`}
+        />
       </td>
       <td className="py-2 pr-4">
         <div className="flex items-center justify-end gap-3 sm:gap-4">
@@ -178,10 +189,16 @@ export function AdminAlbumsTable({
   albums,
   deleteAlbum,
   reorderAlbums,
+  setAlbumFlag,
 }: {
   albums: Album[];
   deleteAlbum: (id: string) => Promise<void>;
   reorderAlbums: (orderedIds: string[]) => Promise<void>;
+  setAlbumFlag: (
+    id: string,
+    field: "featured" | "published",
+    value: boolean,
+  ) => Promise<void>;
 }) {
   const [query, setQuery] = useState("");
   const [items, setItems] = useState(albums);
@@ -215,6 +232,31 @@ export function AdminAlbumsTable({
   const sensors = useSensors(
     useSensor(PointerSensor, { activationConstraint: { distance: 4 } }),
   );
+
+  function handleToggle(
+    album: Album,
+    field: "featured" | "published",
+    value: boolean,
+  ) {
+    setItems((prev) =>
+      prev.map((a) => (a.id === album.id ? { ...a, [field]: value } : a)),
+    );
+
+    startTransition(() => {
+      setAlbumFlag(album.id, field, value).then(
+        () => {
+          const label = field === "featured" ? "Selección" : "Publicado";
+          toast.success(value ? `Añadido a ${label}` : `Quitado de ${label}`);
+        },
+        () => {
+          setItems((prev) =>
+            prev.map((a) => (a.id === album.id ? { ...a, [field]: !value } : a)),
+          );
+          toast.error("No se pudo actualizar");
+        },
+      );
+    });
+  }
 
   function handleDragEnd(event: DragEndEvent) {
     const { active, over } = event;
@@ -309,6 +351,7 @@ export function AdminAlbumsTable({
                       album={album}
                       canReorder={canReorder}
                       onDelete={setPendingDelete}
+                      onToggle={handleToggle}
                     />
                   ))}
                 </tbody>

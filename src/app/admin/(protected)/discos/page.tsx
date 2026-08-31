@@ -4,7 +4,7 @@ import { createClient } from "@/lib/supabase/server";
 import { Album } from "@/lib/types";
 import { AdminAlbumsTable } from "@/components/admin/admin-albums-table";
 import { ToastListener } from "@/components/admin/toast-listener";
-import { deleteAlbum, reorderAlbums } from "./actions";
+import { deleteAlbum, reorderAlbums, setAlbumFlag } from "./actions";
 
 export const metadata = {
   title: "Admin · Discos",
@@ -50,6 +50,7 @@ export default async function AdminDiscosPage() {
         albums={albums}
         deleteAlbum={deleteAlbum}
         reorderAlbums={reorderAlbums}
+        setAlbumFlag={setAlbumFlag}
       />
     </div>
   );

@@ -1,5 +1,6 @@
 import { Album } from "@/lib/types";
 import { CoverPicker } from "@/components/admin/cover-picker";
+import { Switch } from "@/components/admin/switch";
 
 export function AlbumForm({
   album,
@@ -99,19 +100,11 @@ export function AlbumForm({
 
       <div className="flex items-center gap-6">
         <label className="flex items-center gap-2 text-sm">
-          <input
-            type="checkbox"
-            name="featured"
-            defaultChecked={album?.featured}
-          />
+          <Switch name="featured" defaultChecked={album?.featured} />
           Destacado (aparece en Selección)
         </label>
         <label className="flex items-center gap-2 text-sm">
-          <input
-            type="checkbox"
-            name="published"
-            defaultChecked={album?.published ?? true}
-          />
+          <Switch name="published" defaultChecked={album?.published ?? true} />
           Publicado
         </label>
       </div>
