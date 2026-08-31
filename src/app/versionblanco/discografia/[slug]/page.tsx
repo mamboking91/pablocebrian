@@ -36,8 +36,7 @@ export default async function VersionBlancoAlbumPage({
 
             <dl className="space-y-2 text-sm mb-8">
               {album.role && (
-                <div className="flex gap-2">
-                  <dt className="text-muted w-28 shrink-0">Rol</dt>
+                <div>
                   <dd>{album.role}</dd>
                 </div>
               )}
