@@ -16,6 +16,15 @@ import path from "node:path";
 import { createClient } from "@supabase/supabase-js";
 import { PLACEHOLDER_ALBUMS } from "../src/lib/placeholder-albums";
 
+// Node < 22 no trae WebSocket nativo, y @supabase/supabase-js lo necesita
+// para inicializar su cliente de Realtime (que este script no usa, pero se
+// crea igualmente). Polyfill con `ws` para poder correr en Node 20.
+if (!globalThis.WebSocket) {
+  // eslint-disable-next-line @typescript-eslint/no-require-imports
+  const WebSocket = require("ws");
+  globalThis.WebSocket = WebSocket as unknown as typeof globalThis.WebSocket;
+}
+
 const SUPABASE_URL =
   process.env.NEXT_PUBLIC_SUPABASE_URL ??
   (() => {

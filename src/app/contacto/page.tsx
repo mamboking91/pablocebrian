@@ -1,9 +1,24 @@
+import type { Metadata } from "next";
 import { Nav } from "@/components/nav";
 import { Footer } from "@/components/footer";
 import { ContactForm } from "@/components/contact-form";
 
-export const metadata = {
-  title: "Contacto | Pablo Cebrián",
+export const metadata: Metadata = {
+  title: "Contacto",
+  description:
+    "Ponte en contacto con Pablo Cebrián, productor musical, para colaboraciones y proyectos.",
+  alternates: { canonical: "/contacto" },
+  openGraph: {
+    url: "/contacto",
+    title: "Contacto | Pablo Cebrián",
+    description:
+      "Ponte en contacto con Pablo Cebrián, productor musical, para colaboraciones y proyectos.",
+  },
+  twitter: {
+    title: "Contacto | Pablo Cebrián",
+    description:
+      "Ponte en contacto con Pablo Cebrián, productor musical, para colaboraciones y proyectos.",
+  },
 };
 
 export default function ContactoPage() {

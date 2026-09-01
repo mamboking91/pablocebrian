@@ -1,11 +1,35 @@
+import type { Metadata } from "next";
 import Image from "next/image";
 import { Nav } from "@/components/nav";
 import { Footer } from "@/components/footer";
 import { getSiteContent } from "@/lib/site-content";
 import { DEFAULT_BIO_HTML } from "@/lib/default-bio";
 
-export const metadata = {
-  title: "Sobre mí | Pablo Cebrián",
+export const metadata: Metadata = {
+  title: "Sobre mí",
+  description:
+    "La biografía de Pablo Cebrián, productor musical español: trayectoria, discos y colaboraciones.",
+  alternates: { canonical: "/sobre-mi" },
+  openGraph: {
+    url: "/sobre-mi",
+    title: "Sobre mí | Pablo Cebrián",
+    description:
+      "La biografía de Pablo Cebrián, productor musical español: trayectoria, discos y colaboraciones.",
+    images: [
+      {
+        url: "/pablo-cebrian-sobre-mi.jpg",
+        width: 1200,
+        height: 1500,
+        alt: "Pablo Cebrián",
+      },
+    ],
+  },
+  twitter: {
+    title: "Sobre mí | Pablo Cebrián",
+    description:
+      "La biografía de Pablo Cebrián, productor musical español: trayectoria, discos y colaboraciones.",
+    images: ["/pablo-cebrian-sobre-mi.jpg"],
+  },
 };
 
 export default async function SobreMiPage() {

@@ -1,9 +1,40 @@
+import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { Nav } from "@/components/nav";
 import { Footer } from "@/components/footer";
 import { AlbumCover } from "@/components/album-cover";
 import { getAlbumBySlug } from "@/lib/albums";
 import { getAppleMusicEmbed, getSpotifyEmbed } from "@/lib/embeds";
+
+export async function generateMetadata({
+  params,
+}: PageProps<"/discografia/[slug]">): Promise<Metadata> {
+  const { slug } = await params;
+  const album = await getAlbumBySlug(slug);
+
+  if (!album) return {};
+
+  const artists = album.artist_names.join(", ");
+  const title = `${artists} — ${album.title}`;
+  const description = [artists, album.title, album.role, album.release_year]
+    .filter(Boolean)
+    .join(" · ");
+
+  return {
+    title,
+    description,
+    alternates: { canonical: `/discografia/${album.slug}` },
+    openGraph: {
+      url: `/discografia/${album.slug}`,
+      title: `${title} | Pablo Cebrián`,
+      description,
+    },
+    twitter: {
+      title: `${title} | Pablo Cebrián`,
+      description,
+    },
+  };
+}
 
 export default async function AlbumPage({
   params,
