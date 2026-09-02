@@ -1,5 +1,5 @@
 import { notFound } from "next/navigation";
-import { Nav } from "@/components/nav";
+import { PlaylistPageShell } from "@/components/playlist-page-shell";
 import { Footer } from "@/components/footer";
 import { AlbumCover } from "@/components/album-cover";
 import { getAlbumBySlug } from "@/lib/albums";
@@ -21,8 +21,7 @@ export default async function VersionBlancoAlbumPage({
     : null;
 
   return (
-    <>
-      <Nav />
+    <PlaylistPageShell>
       <main className="flex-1 w-full max-w-4xl mx-auto px-6 pb-24">
         <div className="grid sm:grid-cols-2 gap-10 items-start">
           <div className="max-w-sm mx-auto sm:mx-0 w-full">
@@ -95,6 +94,6 @@ export default async function VersionBlancoAlbumPage({
         </div>
       </main>
       <Footer />
-    </>
+    </PlaylistPageShell>
   );
 }

@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { Nav } from "@/components/nav";
+import { PlaylistPageShell } from "@/components/playlist-page-shell";
 import { Footer } from "@/components/footer";
 import { getSiteContent } from "@/lib/site-content";
 import { DEFAULT_BIO_HTML } from "@/lib/default-bio";
@@ -12,8 +12,7 @@ export default async function VersionBlancoSobreMiPage() {
   const bioHtml = (await getSiteContent("bio")) ?? DEFAULT_BIO_HTML;
 
   return (
-    <>
-      <Nav />
+    <PlaylistPageShell>
       <main className="flex-1 w-full max-w-5xl mx-auto px-6 pb-24">
         <div className="grid md:grid-cols-[400px_1fr] gap-10 md:gap-16 items-start">
           <div className="relative w-full aspect-[4/5] bg-background-elevated border border-border overflow-hidden">
@@ -34,6 +33,6 @@ export default async function VersionBlancoSobreMiPage() {
         </div>
       </main>
       <Footer />
-    </>
+    </PlaylistPageShell>
   );
 }

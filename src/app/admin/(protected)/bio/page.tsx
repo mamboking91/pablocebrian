@@ -1,7 +1,7 @@
-import { BioEditor } from "@/components/admin/bio-editor";
+import { BioContentEditor } from "@/components/admin/bio-content-editor";
 import { getSiteContent } from "@/lib/site-content";
-import { DEFAULT_BIO_HTML } from "@/lib/default-bio";
-import { saveBio } from "./actions";
+import { parseBioContent } from "@/lib/bio-content";
+import { saveBioContent } from "./actions";
 
 export const metadata = {
   title: "Admin · Bio",
@@ -10,15 +10,19 @@ export const metadata = {
 export const dynamic = "force-dynamic";
 
 export default async function AdminBioPage() {
-  const content = (await getSiteContent("bio")) ?? DEFAULT_BIO_HTML;
+  const raw = await getSiteContent("bio_structured");
+  const content = parseBioContent(raw);
 
   return (
     <div>
       <h1 className="font-display text-2xl mb-2">Sobre mí</h1>
       <p className="text-sm text-muted mb-6">
-        Este texto es el que aparece en la página pública “Sobre mí”.
+        Este contenido es el que aparece en la página pública &ldquo;Sobre
+        mí&rdquo;.
+        Puedes añadir, editar, reordenar o eliminar cualquier sección, y
+        cambiar la foto.
       </p>
-      <BioEditor initialContent={content} action={saveBio} />
+      <BioContentEditor initialContent={content} action={saveBioContent} />
     </div>
   );
 }

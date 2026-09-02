@@ -1,4 +1,4 @@
-import { Nav } from "@/components/nav";
+import { PlaylistPageShell } from "@/components/playlist-page-shell";
 import { Footer } from "@/components/footer";
 import { DiscographyBrowser } from "@/components/discography-browser";
 import { getAlbums } from "@/lib/albums";
@@ -11,12 +11,11 @@ export default async function VersionBlancoDiscografiaPage() {
   const albums = await getAlbums();
 
   return (
-    <>
-      <Nav />
+    <PlaylistPageShell>
       <main className="flex-1 w-full max-w-6xl mx-auto px-6 pb-24">
         <DiscographyBrowser albums={albums} />
       </main>
       <Footer />
-    </>
+    </PlaylistPageShell>
   );
 }

@@ -150,3 +150,35 @@ alter table public.albums
 
 alter table public.albums
   add column if not exists show_apple_music boolean not null default true;
+
+-- ============================================================
+-- Migración: foto editable de la página "Sobre mí" (diseño 5A)
+-- ============================================================
+
+insert into storage.buckets (id, name, public)
+values ('bio-photos', 'bio-photos', true)
+on conflict (id) do nothing;
+
+drop policy if exists "Foto de bio visible públicamente" on storage.objects;
+create policy "Foto de bio visible públicamente"
+  on storage.objects for select
+  to anon, authenticated
+  using (bucket_id = 'bio-photos');
+
+drop policy if exists "Admin sube foto de bio" on storage.objects;
+create policy "Admin sube foto de bio"
+  on storage.objects for insert
+  to authenticated
+  with check (bucket_id = 'bio-photos');
+
+drop policy if exists "Admin actualiza foto de bio" on storage.objects;
+create policy "Admin actualiza foto de bio"
+  on storage.objects for update
+  to authenticated
+  using (bucket_id = 'bio-photos');
+
+drop policy if exists "Admin borra foto de bio" on storage.objects;
+create policy "Admin borra foto de bio"
+  on storage.objects for delete
+  to authenticated
+  using (bucket_id = 'bio-photos');

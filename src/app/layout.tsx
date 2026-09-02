@@ -1,6 +1,9 @@
 import type { Metadata } from "next";
 import { Playfair_Display, Inter } from "next/font/google";
 import { SITE_URL, SITE_NAME, SITE_DESCRIPTION } from "@/lib/site";
+import { getSiteContent } from "@/lib/site-content";
+import { parsePlaylistContent } from "@/lib/playlist-content";
+import { PlaylistProvider } from "@/components/playlist-context";
 import "./globals.css";
 
 const playfair = Playfair_Display({
@@ -71,7 +74,11 @@ const personJsonLd = {
   ],
 };
 
-export default function RootLayout({ children }: LayoutProps<"/">) {
+export default async function RootLayout({ children }: LayoutProps<"/">) {
+  const playlistContent = parsePlaylistContent(
+    await getSiteContent("playlist"),
+  );
+
   return (
     <html
       lang="es"
@@ -82,7 +89,9 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(personJsonLd) }}
         />
-        {children}
+        <PlaylistProvider content={playlistContent}>
+          {children}
+        </PlaylistProvider>
       </body>
     </html>
   );

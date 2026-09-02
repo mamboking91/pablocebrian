@@ -9,8 +9,9 @@ const SPOTIFY_EMBED_TYPES = [
 
 export type SpotifyEmbed = { src: string; height: number };
 export type AppleMusicEmbed = { src: string; height: number };
+export type SpotifyUrlRef = { type: string; id: string };
 
-export function getSpotifyEmbed(url: string | null): SpotifyEmbed | null {
+export function parseSpotifyUrl(url: string | null): SpotifyUrlRef | null {
   if (!url) return null;
 
   let parsed: URL;
@@ -32,9 +33,16 @@ export function getSpotifyEmbed(url: string | null): SpotifyEmbed | null {
   const id = segments[typeIndex + 1];
   if (!id) return null;
 
+  return { type, id };
+}
+
+export function getSpotifyEmbed(url: string | null): SpotifyEmbed | null {
+  const ref = parseSpotifyUrl(url);
+  if (!ref) return null;
+
   return {
-    src: `https://open.spotify.com/embed/${type}/${id}`,
-    height: type === "track" || type === "episode" ? 152 : 352,
+    src: `https://open.spotify.com/embed/${ref.type}/${ref.id}`,
+    height: ref.type === "track" || ref.type === "episode" ? 152 : 352,
   };
 }
 
