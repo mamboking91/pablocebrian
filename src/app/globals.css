@@ -136,3 +136,16 @@ body {
 .prose-bio li {
   margin-bottom: 0.4em;
 }
+
+/* Editor TipTap (admin) — misma base tipográfica que .prose-bio. */
+.prose-bio-edit {
+  min-height: 90px;
+}
+
+.prose-bio-edit p {
+  margin-bottom: 0.6em;
+}
+
+.prose-bio-edit p:last-child {
+  margin-bottom: 0;
+}

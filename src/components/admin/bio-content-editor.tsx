@@ -7,6 +7,7 @@ import type {
   BioContent,
   BioHighlight,
 } from "@/lib/bio-content";
+import { RichTextEditor } from "@/components/admin/rich-text-editor";
 
 function newId() {
   return typeof crypto !== "undefined" && "randomUUID" in crypto
@@ -211,13 +212,7 @@ export function BioContentEditor({
         )}
         {content.paragraphs.map((p, i) => (
           <div key={p.id} className="flex flex-col gap-2 border border-border p-3">
-            <textarea
-              className="input"
-              rows={3}
-              value={p.text}
-              onChange={(e) => updateParagraph(i, e.target.value)}
-              placeholder="Usa **texto** para resaltar nombres o palabras clave."
-            />
+            <RichTextEditor value={p.text} onChange={(html) => updateParagraph(i, html)} />
             <RowControls
               index={i}
               length={content.paragraphs.length}

@@ -15,10 +15,9 @@ export function PlaylistForm({
   initialContent: PlaylistContent;
   action: (formData: FormData) => Promise<void>;
 }) {
-  const [provider, setProvider] = useState<PlaylistProvider>(
-    initialContent.provider,
-  );
-  const [url, setUrl] = useState(initialContent.url);
+  const [provider, setProvider] = useState<PlaylistProvider>(initialContent.provider);
+  const [spotifyUrl, setSpotifyUrl] = useState(initialContent.spotifyUrl);
+  const [appleMusicUrl, setAppleMusicUrl] = useState(initialContent.appleMusicUrl);
   const [saving, setSaving] = useState(false);
   const [saved, setSaved] = useState(false);
 
@@ -33,9 +32,37 @@ export function PlaylistForm({
       }}
       className="flex flex-col gap-6 max-w-lg"
     >
+      <div className="space-y-1">
+        <label className="text-xs uppercase tracking-wide text-muted block">
+          Enlace de Spotify
+        </label>
+        <input
+          name="spotifyUrl"
+          autoComplete="off"
+          className="input"
+          placeholder="https://open.spotify.com/playlist/..."
+          value={spotifyUrl}
+          onChange={(e) => setSpotifyUrl(e.target.value)}
+        />
+      </div>
+
+      <div className="space-y-1">
+        <label className="text-xs uppercase tracking-wide text-muted block">
+          Enlace de Apple Music
+        </label>
+        <input
+          name="appleMusicUrl"
+          autoComplete="off"
+          className="input"
+          placeholder="https://music.apple.com/es/playlist/..."
+          value={appleMusicUrl}
+          onChange={(e) => setAppleMusicUrl(e.target.value)}
+        />
+      </div>
+
       <div className="space-y-2">
         <label className="text-xs uppercase tracking-wide text-muted block">
-          Servicio
+          Reproductor activo en la web
         </label>
         <div className="flex gap-2">
           {providers.map((p) => (
@@ -54,27 +81,9 @@ export function PlaylistForm({
           ))}
         </div>
         <input type="hidden" name="provider" value={provider} />
-      </div>
-
-      <div className="space-y-1">
-        <label className="text-xs uppercase tracking-wide text-muted block">
-          Enlace de la playlist
-        </label>
-        <input
-          name="url"
-          autoComplete="off"
-          className="input"
-          placeholder={
-            provider === "apple_music"
-              ? "https://music.apple.com/es/playlist/..."
-              : "https://open.spotify.com/playlist/..."
-          }
-          value={url}
-          onChange={(e) => setUrl(e.target.value)}
-        />
         <p className="text-xs text-muted/70">
-          Pega el enlace de compartir de la playlist de{" "}
-          {provider === "apple_music" ? "Apple Music" : "Spotify"}.
+          Puedes guardar los dos enlaces a la vez; este selector decide cuál se
+          muestra y reproduce en la web. Cambiarlo no borra el otro enlace.
         </p>
       </div>
 

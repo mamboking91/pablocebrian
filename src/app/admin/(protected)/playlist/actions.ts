@@ -7,7 +7,8 @@ import type { PlaylistContent } from "@/lib/playlist-content";
 export async function savePlaylistContent(formData: FormData) {
   const content: PlaylistContent = {
     provider: formData.get("provider") === "apple_music" ? "apple_music" : "spotify",
-    url: String(formData.get("url") ?? "").trim(),
+    spotifyUrl: String(formData.get("spotifyUrl") ?? "").trim(),
+    appleMusicUrl: String(formData.get("appleMusicUrl") ?? "").trim(),
   };
 
   const supabase = await createClient();

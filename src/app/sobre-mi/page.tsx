@@ -32,20 +32,6 @@ export const metadata: Metadata = {
   },
 };
 
-/** Convierte "texto **resaltado**" en spans resaltados, sin usar HTML. */
-function renderEmphasized(text: string) {
-  return text.split(/(\*\*[^*]+\*\*)/g).map((chunk, i) => {
-    if (chunk.startsWith("**") && chunk.endsWith("**")) {
-      return (
-        <span key={i} className="text-foreground/90">
-          {chunk.slice(2, -2)}
-        </span>
-      );
-    }
-    return <span key={i}>{chunk}</span>;
-  });
-}
-
 function AwardIcon({ icon }: { icon: BioAwardIcon }) {
   if (icon === "star") {
     return (
@@ -132,12 +118,11 @@ export default async function SobreMiPage() {
         {bio.paragraphs.length > 0 && (
           <div className="grid md:grid-cols-2 gap-8 md:gap-12 pt-10 md:pt-12">
             {bio.paragraphs.map((p) => (
-              <p
+              <div
                 key={p.id}
-                className="text-[15px] sm:text-base leading-[1.85] text-foreground/70 text-pretty"
-              >
-                {renderEmphasized(p.text)}
-              </p>
+                className="prose-bio text-[15px] sm:text-base text-pretty"
+                dangerouslySetInnerHTML={{ __html: p.text }}
+              />
             ))}
           </div>
         )}

@@ -4,13 +4,14 @@ import Link from "next/link";
 import { PlaylistNavLink } from "@/components/playlist-nav-link";
 import { PlaylistPanel } from "@/components/playlist-panel";
 import { usePlaylist } from "@/components/playlist-context";
+import { getActivePlaylistUrl } from "@/lib/playlist-content";
 
 const linkClassName =
   "whitespace-nowrap text-[8px] min-[360px]:text-[9px] min-[420px]:text-[10px] min-[480px]:text-xs sm:text-sm md:text-base tracking-[0.04em] min-[420px]:tracking-[0.1em] min-[480px]:tracking-[0.22em] sm:tracking-[0.28em] uppercase text-foreground/70 hover:text-accent transition-colors";
 
 export default function VersionBlancoHome() {
   const { open, content } = usePlaylist();
-  const showFooter = open && !!content.url;
+  const showFooter = open && !!getActivePlaylistUrl(content);
 
   return (
     <div className="flex-1 flex flex-col h-dvh min-h-0 overflow-hidden">

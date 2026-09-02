@@ -1,18 +1,20 @@
 "use client";
 
 import { usePlaylist } from "@/components/playlist-context";
+import { getActivePlaylistUrl } from "@/lib/playlist-content";
 import { getAppleMusicEmbed, getSpotifyEmbed } from "@/lib/embeds";
 
 /** Ocupa el espacio restante bajo el menú, centrado dentro de él. */
 export function PlaylistPanel() {
   const { content, open } = usePlaylist();
+  const activeUrl = getActivePlaylistUrl(content);
 
-  if (!open || !content.url) return null;
+  if (!open || !activeUrl) return null;
 
   const embed =
     content.provider === "apple_music"
-      ? getAppleMusicEmbed(content.url)
-      : getSpotifyEmbed(content.url);
+      ? getAppleMusicEmbed(activeUrl)
+      : getSpotifyEmbed(activeUrl);
 
   const title =
     content.provider === "apple_music" ? "Playlist — Apple Music" : "Playlist — Spotify";

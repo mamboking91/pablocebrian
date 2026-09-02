@@ -1,6 +1,7 @@
 /**
  * Contenido estructurado de la página "Sobre mí" (diseño 5A), editable
  * desde /admin/bio. Se guarda como JSON en site_content (key: "bio_structured").
+ * Los párrafos se guardan como HTML (editados con TipTap en el admin).
  */
 
 export type BioAwardIcon = "star" | "ring" | "dot";
@@ -20,6 +21,7 @@ export interface BioHighlight {
 
 export interface BioParagraph {
   id: string;
+  /** HTML (negrita, cursiva, listas, enlaces) producido por el editor TipTap. */
   text: string;
 }
 
@@ -41,11 +43,11 @@ export const DEFAULT_BIO_CONTENT: BioContent = {
   paragraphs: [
     {
       id: "p1",
-      text: "Mi primer trabajo profesional llegó a los 19 años, cuando **Kike Perdomo** me dio la oportunidad de colaborar como guitarrista y autor. El camino siguió en los estudios Multitrack de **Paco Chinea**: técnico de sonido, guitarrista, programador y productor, en plena revolución de la informática musical.",
+      text: "<p>Mi primer trabajo profesional llegó a los 19 años, cuando <strong>Kike Perdomo</strong> me dio la oportunidad de colaborar como guitarrista y autor. El camino siguió en los estudios Multitrack de <strong>Paco Chinea</strong>: técnico de sonido, guitarrista, programador y productor, en plena revolución de la informática musical.</p>",
     },
     {
       id: "p2",
-      text: "Poco después me trasladé a Madrid con **Iván Mur** para perseguir nuestro sueño con **Fábula**: dos álbumes en Warner Music, más de 80 conciertos y una gira por España como teloneros de R.E.M. En 2008 dejé el escenario para componer y producir.",
+      text: "<p>Poco después me trasladé a Madrid con <strong>Iván Mur</strong> para perseguir nuestro sueño con <strong>Fábula</strong>: dos álbumes en Warner Music, más de 80 conciertos y una gira por España como teloneros de R.E.M. En 2008 dejé el escenario para componer y producir.</p>",
     },
   ],
   awards: [
@@ -77,6 +79,23 @@ export const DEFAULT_BIO_CONTENT: BioContent = {
     "Sigo afrontando cada proyecto con la misma ilusión que aquel joven de 19 años que entró por primera vez en un estudio de grabación.",
 };
 
+/**
+ * Los párrafos guardados antes de introducir TipTap usaban texto plano con
+ * `**negrita**`. Si el texto no parece ya HTML, lo convierte para que el
+ * contenido antiguo se siga viendo (y edite) correctamente.
+ */
+function legacyTextToHtml(text: string): string {
+  if (/<[a-z][\s\S]*>/i.test(text)) return text;
+
+  const escaped = text
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/\*\*([^*]+)\*\*/g, "<strong>$1</strong>");
+
+  return `<p>${escaped}</p>`;
+}
+
 export function parseBioContent(raw: string | null): BioContent {
   if (!raw) return DEFAULT_BIO_CONTENT;
 
@@ -87,7 +106,7 @@ export function parseBioContent(raw: string | null): BioContent {
       headline: parsed.headline ?? DEFAULT_BIO_CONTENT.headline,
       subheadline: parsed.subheadline ?? DEFAULT_BIO_CONTENT.subheadline,
       paragraphs: parsed.paragraphs?.length
-        ? parsed.paragraphs
+        ? parsed.paragraphs.map((p) => ({ ...p, text: legacyTextToHtml(p.text) }))
         : DEFAULT_BIO_CONTENT.paragraphs,
       awards: parsed.awards ?? DEFAULT_BIO_CONTENT.awards,
       highlights: parsed.highlights ?? DEFAULT_BIO_CONTENT.highlights,

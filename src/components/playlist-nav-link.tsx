@@ -1,11 +1,12 @@
 "use client";
 
 import { usePlaylist } from "@/components/playlist-context";
+import { getActivePlaylistUrl } from "@/lib/playlist-content";
 
 export function PlaylistNavLink({ className }: { className: string }) {
   const { content, open, toggle } = usePlaylist();
 
-  if (!content.url) return null;
+  if (!getActivePlaylistUrl(content)) return null;
 
   return (
     <li>

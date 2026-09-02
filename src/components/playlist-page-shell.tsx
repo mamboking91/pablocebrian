@@ -4,6 +4,7 @@ import type { ReactNode } from "react";
 import { Nav } from "@/components/nav";
 import { PlaylistPanel } from "@/components/playlist-panel";
 import { usePlaylist } from "@/components/playlist-context";
+import { getActivePlaylistUrl } from "@/lib/playlist-content";
 
 /**
  * Envuelve el contenido propio de una página (todo lo que va bajo el menú
@@ -12,7 +13,7 @@ import { usePlaylist } from "@/components/playlist-context";
  */
 export function PlaylistPageShell({ children }: { children: ReactNode }) {
   const { open, content } = usePlaylist();
-  const showPlaylist = open && !!content.url;
+  const showPlaylist = open && !!getActivePlaylistUrl(content);
 
   return (
     <div
