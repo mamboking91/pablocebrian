@@ -18,8 +18,8 @@ export const metadata: Metadata = {
     images: [
       {
         url: "/pablo-cebrian-sobre-mi.jpg",
-        width: 1200,
-        height: 1500,
+        width: 1448,
+        height: 1086,
         alt: "Pablo Cebrián",
       },
     ],
