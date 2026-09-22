@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { sendContactMessage } from "@/app/contacto/actions";
 
 function Field({
   id,
@@ -40,6 +41,8 @@ function Field({
 
 export function ContactForm() {
   const [sent, setSent] = useState(false);
+  const [sending, setSending] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
   if (sent) {
     return (
@@ -51,9 +54,17 @@ export function ContactForm() {
 
   return (
     <form
-      onSubmit={(e) => {
+      onSubmit={async (e) => {
         e.preventDefault();
-        setSent(true);
+        setSending(true);
+        setError(null);
+        const result = await sendContactMessage(new FormData(e.currentTarget));
+        setSending(false);
+        if (result.ok) {
+          setSent(true);
+        } else {
+          setError(result.error);
+        }
       }}
       className="relative w-full border border-border px-6 py-10 sm:px-12 sm:py-12"
     >
@@ -117,15 +128,20 @@ export function ContactForm() {
         </div>
       </div>
 
+      {error && (
+        <p className="mt-6 text-center text-sm text-red-500">{error}</p>
+      )}
+
       <button
         type="submit"
-        className="mt-8 inline-flex items-center gap-2.5 bg-accent px-9 py-3.5 text-xs font-semibold tracking-[0.2em] uppercase text-background transition-opacity hover:opacity-85 mx-auto flex"
+        disabled={sending}
+        className="mt-8 inline-flex items-center gap-2.5 bg-accent px-9 py-3.5 text-xs font-semibold tracking-[0.2em] uppercase text-background transition-opacity hover:opacity-85 disabled:opacity-60 mx-auto flex"
       >
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
           <path d="m22 2-7 20-4-9-9-4Z" />
           <path d="M22 2 11 13" />
         </svg>
-        Enviar
+        {sending ? "Enviando…" : "Enviar"}
       </button>
     </form>
   );
